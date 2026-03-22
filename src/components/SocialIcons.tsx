@@ -13,6 +13,8 @@ const SocialIcons = () => {
   useEffect(() => {
     const social = document.getElementById("social") as HTMLElement;
 
+    const cleanupFns: Array<() => void> = [];
+
     social.querySelectorAll("span").forEach((item) => {
       const elem = item as HTMLElement;
       const link = elem.querySelector("a") as HTMLElement;
@@ -22,6 +24,7 @@ const SocialIcons = () => {
       let mouseY = rect.height / 2;
       let currentX = 0;
       let currentY = 0;
+      let animationFrameId: number;
 
       const updatePosition = () => {
         currentX += (mouseX - currentX) * 0.1;
@@ -30,7 +33,7 @@ const SocialIcons = () => {
         link.style.setProperty("--siLeft", `${currentX}px`);
         link.style.setProperty("--siTop", `${currentY}px`);
 
-        requestAnimationFrame(updatePosition);
+        animationFrameId = requestAnimationFrame(updatePosition);
       };
 
       const onMouseMove = (e: MouseEvent) => {
@@ -50,32 +53,37 @@ const SocialIcons = () => {
 
       updatePosition();
 
-      return () => {
-        elem.removeEventListener("mousemove", onMouseMove);
-      };
+      cleanupFns.push(() => {
+        document.removeEventListener("mousemove", onMouseMove);
+        cancelAnimationFrame(animationFrameId);
+      });
     });
+
+    return () => {
+      cleanupFns.forEach((fn) => fn());
+    };
   }, []);
 
   return (
     <div className="icons-section">
       <div className="social-icons" data-cursor="icons" id="social">
         <span>
-          <a href="https://github.com/rajeshchityal" target="_blank">
+          <a href="https://github.com/bhautikr2409" target="_blank">
             <FaGithub />
           </a>
         </span>
         <span>
-          <a href="https://www.linkedin.com/in/rajeshchityal" target="_blank">
+          <a href="https://www.linkedin.com/in/bhautik-rakholiya-aa70ba309/" target="_blank">
             <FaLinkedinIn />
           </a>
         </span>
         <span>
-          <a href="https://x.com/rajeshchityal" target="_blank">
+          <a href="https://x.com/BhautikR2409" target="_blank">
             <FaXTwitter />
           </a>
         </span>
         <span>
-          <a href="https://www.instagram.com/rajeshchityal" target="_blank">
+          <a href="https://www.instagram.com/bhautik143/" target="_blank">
             <FaInstagram />
           </a>
         </span>

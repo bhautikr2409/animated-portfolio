@@ -5,34 +5,34 @@ import { MdArrowBack, MdArrowForward } from "react-icons/md";
 
 const projects = [
   {
-    title: "Solid Starters",
-    category: "Low-Code Platform",
-    tools: "Angular, Next.js, NestJS, MongoDB",
-    image: "/images/Solidx.png",
+    title: "jewellery website",
+    category: "Full Stack Application",
+    tools: "React, Node.js, MongoDB",
+    image: "/images/aadrimJwelery.png",
   },
   {
-    title: "Radix",
-    category: "E-Commerce",
-    tools: "Angular, Next.js, NestJS, CMS",
-    image: "/images/radix.png",
+    title: "Crop PDF project",
+    category: "Web Application",
+    tools: "React.js, Tailwind CSS",
+    image: "/images/cropPDF.png",
   },
   {
-    title: "Bond Cancellation",
-    category: "Import-Export Automation",
-    tools: "Angular, Next.js, NestJS, Workflows",
+    title: "Customer relationship management",
+    category: "CRM Platform",
+    tools: "Node.js, Express, MySQL",
     image: "/images/bond.png",
   },
   {
-    title: "Sapphire",
-    category: "CRM Platform",
-    tools: "AngularJS, NestJS, PostgreSQL",
-    image: "/images/sapphire.png",
+    title: "Clone Apple Website UI",
+    category: "Frontend UI",
+    tools: "React, Tailwind CSS",
+    image: "/images/appleUI.png",
   },
   {
-    title: "Mpro",
-    category: "Insurance Platform",
-    tools: "React.js, Node.js, Microservices",
-    image: "/images/Maxlife.png",
+    title: "UI related Project",
+    category: "Frontend UI",
+    tools: "React, Tailwind CSS",
+    image: "/images/templateWings.png",
   },
 ];
 
@@ -47,7 +47,7 @@ const Work = () => {
       setCurrentIndex(index);
       setTimeout(() => setIsAnimating(false), 500);
     },
-    [isAnimating]
+    [isAnimating],
   );
 
   const goToPrev = useCallback(() => {
@@ -88,16 +88,22 @@ const Work = () => {
             <MdArrowForward />
           </button>
 
-          {/* Slides */}
           <div className="carousel-track-container">
             <div
               className="carousel-track"
               style={{
-                transform: `translateX(-${currentIndex * 100}%)`,
+                transform: `translateX(-${
+                  (currentIndex * 100) / projects.length
+                }%)`,
+                width: `${projects.length * 100}%`,
               }}
             >
               {projects.map((project, index) => (
-                <div className="carousel-slide" key={index}>
+                <div
+                  className="carousel-slide"
+                  key={index}
+                  style={{ width: `${100 / projects.length}%`, minWidth: 'auto' }}
+                >
                   <div className="carousel-content">
                     <div className="carousel-info">
                       <div className="carousel-number">
@@ -105,9 +111,7 @@ const Work = () => {
                       </div>
                       <div className="carousel-details">
                         <h4>{project.title}</h4>
-                        <p className="carousel-category">
-                          {project.category}
-                        </p>
+                        <p className="carousel-category">{project.category}</p>
                         <div className="carousel-tools">
                           <span className="tools-label">Tools & Features</span>
                           <p>{project.tools}</p>
@@ -128,8 +132,9 @@ const Work = () => {
             {projects.map((_, index) => (
               <button
                 key={index}
-                className={`carousel-dot ${index === currentIndex ? "carousel-dot-active" : ""
-                  }`}
+                className={`carousel-dot ${
+                  index === currentIndex ? "carousel-dot-active" : ""
+                }`}
                 onClick={() => goToSlide(index)}
                 aria-label={`Go to project ${index + 1}`}
                 data-cursor="disable"
